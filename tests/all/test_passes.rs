@@ -86,6 +86,7 @@ fn test_init_all_passes_for_module() {
     #[cfg(not(any(feature = "llvm12-0", feature = "llvm13-0", feature = "llvm14-0")))]
     pass_manager.add_constant_propagation_pass();
     #[cfg(any(feature = "llvm12-0", feature = "llvm13-0", feature = "llvm14-0"))]
+    pass_manager.add_bounds_check_pass();
     pass_manager.add_instruction_simplify_pass();
     pass_manager.add_demote_memory_to_register_pass();
     pass_manager.add_verifier_pass();

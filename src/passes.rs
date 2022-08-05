@@ -33,7 +33,7 @@ use llvm_sys::transforms::scalar::{
     LLVMAddDemoteMemoryToRegisterPass, LLVMAddEarlyCSEPass, LLVMAddGVNPass, LLVMAddIndVarSimplifyPass,
     LLVMAddInstructionCombiningPass, LLVMAddJumpThreadingPass, LLVMAddLICMPass, LLVMAddLoopDeletionPass,
     LLVMAddLoopIdiomPass, LLVMAddLoopRerollPass, LLVMAddLoopRotatePass, LLVMAddLoopUnrollPass, LLVMAddLoopUnswitchPass,
-    LLVMAddLowerExpectIntrinsicPass, LLVMAddMemCpyOptPass, LLVMAddMergedLoadStoreMotionPass,
+    LLVMAddLowerExpectIntrinsicPass, LLVMAddMemCpyOptPass, LLVMAddMergedLoadStoreMotionPass, LLVMAddBoundsCheckPass,
     LLVMAddPartiallyInlineLibCallsPass, LLVMAddReassociatePass, LLVMAddSCCPPass, LLVMAddScalarReplAggregatesPass,
     LLVMAddScalarReplAggregatesPassSSA, LLVMAddScalarReplAggregatesPassWithThreshold, LLVMAddScalarizerPass,
     LLVMAddScopedNoAliasAAPass, LLVMAddSimplifyLibCallsPass, LLVMAddTailCallEliminationPass,
@@ -685,6 +685,11 @@ impl<T: PassManagerSubType> PassManager<T> {
     /// to the computation of the function’s return value.
     pub fn add_loop_deletion_pass(&self) {
         unsafe { LLVMAddLoopDeletionPass(self.pass_manager) }
+    }
+
+    /// Remove unnecessary bounds checks
+    pub fn add_bounds_check_pass(&self) {
+        unsafe { LLVMAddBoundsCheckPass(self.pass_manager) }
     }
 
     /// No LLVM documentation is available at this time.
