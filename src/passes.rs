@@ -33,7 +33,8 @@ use llvm_sys::transforms::scalar::{
     LLVMAddDemoteMemoryToRegisterPass, LLVMAddEarlyCSEPass, LLVMAddGVNPass, LLVMAddIndVarSimplifyPass,
     LLVMAddInstructionCombiningPass, LLVMAddJumpThreadingPass, LLVMAddLICMPass, LLVMAddLoopDeletionPass,
     LLVMAddLoopIdiomPass, LLVMAddLoopRerollPass, LLVMAddLoopRotatePass, LLVMAddLoopUnrollPass, LLVMAddLoopUnswitchPass,
-    LLVMAddLowerExpectIntrinsicPass, LLVMAddMemCpyOptPass, LLVMAddMergedLoadStoreMotionPass, LLVMAddBoundsCheckPass,
+    LLVMAddLowerExpectIntrinsicPass, LLVMAddMemCpyOptPass, LLVMAddMergedLoadStoreMotionPass, LLVMAddWasmerMemoryAccessAnalysis,
+    LLVMAddWasmerBoundsCheckLoopOptimization,
     LLVMAddPartiallyInlineLibCallsPass, LLVMAddReassociatePass, LLVMAddSCCPPass, LLVMAddScalarReplAggregatesPass,
     LLVMAddScalarReplAggregatesPassSSA, LLVMAddScalarReplAggregatesPassWithThreshold, LLVMAddScalarizerPass,
     LLVMAddScopedNoAliasAAPass, LLVMAddSimplifyLibCallsPass, LLVMAddTailCallEliminationPass,
@@ -688,8 +689,13 @@ impl<T: PassManagerSubType> PassManager<T> {
     }
 
     /// Remove unnecessary bounds checks
-    pub fn add_bounds_check_pass(&self) {
-        unsafe { LLVMAddBoundsCheckPass(self.pass_manager) }
+    pub fn add_wasmer_memory_access_analysis(&self) {
+        unsafe { LLVMAddWasmerMemoryAccessAnalysis(self.pass_manager) }
+    }
+
+    /// Remove unnecessary bounds checks
+    pub fn add_wasmer_bounds_check_loop_optimization(&self) {
+        unsafe { LLVMAddWasmerBoundsCheckLoopOptimization(self.pass_manager) }
     }
 
     /// No LLVM documentation is available at this time.
